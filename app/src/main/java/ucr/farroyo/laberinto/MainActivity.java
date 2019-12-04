@@ -4,21 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     Laberinto lab;
-    TextView textView;
+    WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Hay que buscar la interfax para colocar texto en el xml. para eso utilizamos su id.
-        textView = findViewById(R.id.textbox);
+        webView = findViewById(R.id.textbox);
         lab = new Laberinto(20);
-        textView.setText(lab.toString());
+        webView.loadDataWithBaseURL(null, lab.toString(), "text/html", "utf-8", null);
         System.out.println(lab);
         AsyncTask<Void, String, Void> task = new AsyncTask<Void, String, Void>() {
             @Override
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                textView.setText(lab.toString());
+                webView.loadDataWithBaseURL(null, lab.toString(), "text/html", "utf-8", null);
             }
         };
         task.execute();

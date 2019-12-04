@@ -137,21 +137,22 @@ public class Laberinto {
  *  Convierte el laberinto a una tira de caracteres para despliegue
  */
     public String toString(){
-        String reset   = "\033[0m";
-        String red     = "\033[31m";
-        String green   = "\033[32m";
-        String yellow  = "\033[33m";
-        String blue    = "\033[34m";
-        String magenta = "\033[35m";
-        String cyan    = "\033[36m";
-        String white   = "\033[37m";
+        String reset   = "</font></td>";
+        String red     = "<td><font color=#ff0000>";
+        String green   = "<td><font color=#00ff00>";
+        String yellow  = "<td><font color=#FFFF00>";
+        String blue    = "<td><font color=#0000FF>";
+        String black = "<td><font color=#000000>";
+        String cyan    = "<td><font color=#00FFFF>";
+        String white   = "<td><font color=#ffffff>";
         StringBuffer tira = new StringBuffer( "" );
-
+        tira.append("<html><body><table>");
         for ( int f=0; f< this.laberinto.length; ++f ) {
+            tira.append( "<tr>" );
             for (int c=0; c < this.laberinto[ f ].length; ++c ){
                 switch ( this.laberinto[ f ][ c ] ) {
                     case RATA:
-                        tira.append( red + RATA + reset );
+                        tira.append( red + RATA + "\t" + reset );
                         break;
                     case CAMINO:
                         tira.append( green + CAMINO + reset );
@@ -163,11 +164,12 @@ public class Laberinto {
                         tira.append( cyan + MURO + reset );
                         break;
                     default:
-                        tira.append( this.laberinto[ f ][ c ] );
+                        tira.append( magenta + this.laberinto[ f ][ c ] + reset);
                 }
             }
-            tira.append( "\n" );
+            tira.append( "</tr>" );
         }
+        tira.append("</table></body></html>");
 
         return tira.toString();
 
